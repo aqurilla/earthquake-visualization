@@ -1,7 +1,9 @@
 package module4;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.data.Feature;
@@ -214,6 +216,42 @@ public class EarthquakeCityMap extends PApplet {
 		//        String country = (String)m.getProperty("country");
 		
 		
+		// Using a dictionary will be more efficient
+		Map<String, Integer> dictionary = new HashMap<String, Integer>();
+		String oc = "OCEAN QUAKES";
+		
+		// Loop through earthquakes list, find country and increment by one for each country
+		for(Marker m : quakeMarkers) {
+			EarthquakeMarker em = (EarthquakeMarker)m;
+			// Check if its a land quake or an ocean quake
+			if (em.isOnLand()) {
+				// Increment country dict entry by 1
+				String country = (String)em.getProperty("country");
+				
+				dictionary.put(country, dictionary.getOrDefault(country, 0) + 1);
+				
+//				if(dictionary.containsKey(country)) {
+//		            int val = dictionary.get(country);
+//		            dictionary.put(country, val + 1);
+//		        }
+//		        else
+//		            dictionary.put(country, 1);
+				
+			} else {
+				// Increment dictionary['OCEAN QUAKES'] by 1
+				
+				dictionary.put(oc, dictionary.getOrDefault(oc, 0) + 1);
+			}
+		}
+		
+		// Go through country list and print corresponding dictionary value
+		for (Marker cm : countryMarkers) {
+			String country = (String)cm.getProperty("country");
+			
+			System.out.println(country + ": " + dictionary.getOrDefault(country, 0));
+			
+		}
+		System.out.println(oc + ": " + dictionary.getOrDefault(oc, 0));
 	}
 	
 	
