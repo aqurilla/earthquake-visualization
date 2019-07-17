@@ -15,6 +15,7 @@ import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.marker.MultiMarker;
 import de.fhpotsdam.unfolding.providers.Google;
 import de.fhpotsdam.unfolding.providers.MBTilesMapProvider;
+import de.fhpotsdam.unfolding.providers.OpenStreetMap;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 import parsing.ParseFeed;
 import processing.core.PApplet;
@@ -70,7 +71,8 @@ public class EarthquakeCityMap extends PApplet {
 		    earthquakesURL = "2.5_week.atom";  // The same feed, but saved August 7, 2015
 		}
 		else {
-			map = new UnfoldingMap(this, 200, 50, 650, 600, new Google.GoogleMapProvider());
+			// map = new UnfoldingMap(this, 200, 50, 650, 600, new Google.GoogleMapProvider());
+			map = new UnfoldingMap(this, 200, 50, 650, 600, new OpenStreetMap.OpenStreetMapProvider());
 			// IF YOU WANT TO TEST WITH A LOCAL FILE, uncomment the next line
 		    //earthquakesURL = "2.5_week.atom";
 		}
@@ -78,8 +80,8 @@ public class EarthquakeCityMap extends PApplet {
 		
 		// FOR TESTING: Set earthquakesURL to be one of the testing files by uncommenting
 		// one of the lines below.  This will work whether you are online or offline
-		earthquakesURL = "test1.atom";
-		//earthquakesURL = "test2.atom";
+		// earthquakesURL = "test1.atom";
+		// earthquakesURL = "test2.atom";
 		
 		// WHEN TAKING THIS QUIZ: Uncomment the next line
 		//earthquakesURL = "quiz1.atom";
@@ -228,29 +230,30 @@ public class EarthquakeCityMap extends PApplet {
 				// Increment country dict entry by 1
 				String country = (String)em.getProperty("country");
 				
-//				dictionary.put(country, dictionary.getOrDefault(country, 0) + 1);
+				dictionary.put(country, dictionary.getOrDefault(country, 0) + 1);
 				
-				if(dictionary.containsKey(country)) {
-		            int val = dictionary.get(country);
-		            dictionary.put(country, val + 1);
-		        }
-		        else
-		            dictionary.put(country, 1);
+//				if(dictionary.containsKey(country)) {
+//		            int val = dictionary.get(country);
+//		            dictionary.put(country, val + 1);
+//		        }
+//		        else
+//		            dictionary.put(country, 1);
 				
 			} else {
 				// Increment dictionary['OCEAN QUAKES'] by 1
-				
 				dictionary.put(oc, dictionary.getOrDefault(oc, 0) + 1);
 			}
 		}
 		
-		// Go through country list and print corresponding dictionary value
-		for (Marker cm : countryMarkers) {
-			String country = (String)cm.getProperty("country");
-			
-			System.out.println(country + ": " + dictionary.getOrDefault(country, 0));
-			
+		// Go through and print values obtained
+		for (String country : dictionary.keySet()) {
+			if (country != oc) {
+				String value = dictionary.get(country).toString();
+				System.out.println(country + " : " + value);
+			}
 		}
+		
+		// Print out the number of ocean quakes
 		System.out.println(oc + ": " + dictionary.getOrDefault(oc, 0));
 	}
 	
