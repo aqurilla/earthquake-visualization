@@ -22,8 +22,8 @@ import processing.core.PApplet;
 /** EarthquakeCityMap
  * An application with an interactive map displaying earthquake data.
  * Author: UC San Diego Intermediate Software Development MOOC team
- * @author Your name here
- * Date: July 17, 2015
+ * @author Nitin Suresh
+ * Date: July 14, 2019
  * */
 public class EarthquakeCityMap extends PApplet {
 	
@@ -78,7 +78,7 @@ public class EarthquakeCityMap extends PApplet {
 		
 		// FOR TESTING: Set earthquakesURL to be one of the testing files by uncommenting
 		// one of the lines below.  This will work whether you are online or offline
-		//earthquakesURL = "test1.atom";
+		earthquakesURL = "test1.atom";
 		//earthquakesURL = "test2.atom";
 		
 		// WHEN TAKING THIS QUIZ: Uncomment the next line
@@ -228,14 +228,14 @@ public class EarthquakeCityMap extends PApplet {
 				// Increment country dict entry by 1
 				String country = (String)em.getProperty("country");
 				
-				dictionary.put(country, dictionary.getOrDefault(country, 0) + 1);
+//				dictionary.put(country, dictionary.getOrDefault(country, 0) + 1);
 				
-//				if(dictionary.containsKey(country)) {
-//		            int val = dictionary.get(country);
-//		            dictionary.put(country, val + 1);
-//		        }
-//		        else
-//		            dictionary.put(country, 1);
+				if(dictionary.containsKey(country)) {
+		            int val = dictionary.get(country);
+		            dictionary.put(country, val + 1);
+		        }
+		        else
+		            dictionary.put(country, 1);
 				
 			} else {
 				// Increment dictionary['OCEAN QUAKES'] by 1
